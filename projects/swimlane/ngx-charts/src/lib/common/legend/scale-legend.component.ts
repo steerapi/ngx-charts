@@ -37,7 +37,6 @@ export class ScaleLegendComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     const gradientValues = this.gradientString(this.colors.range(), this.colors.domain());
-    console.log('gradientValues', gradientValues);
     const direction = this.horizontal ? 'right' : 'bottom';
     this.gradient = this.sanitizer.bypassSecurityTrustStyle(`linear-gradient(to ${direction}, ${gradientValues})`);
   }
