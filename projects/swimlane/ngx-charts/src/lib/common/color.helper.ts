@@ -42,8 +42,7 @@ export class ColorHelper {
         colorDomain.push(colorDomain[0]);
         this.colorDomain = colorDomain;
       }
-
-      const points = range(0, 1, 1.0 / colorDomain.length);
+      const points = range(0, 1 + 1 / (colorDomain.length - 1), 1 / (colorDomain.length - 1));
       colorScale = scaleLinear().domain(points).range(colorDomain);
     }
 

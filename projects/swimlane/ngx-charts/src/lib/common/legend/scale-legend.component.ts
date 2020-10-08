@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, ChangeDetectionStrategy, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { range } from 'd3-array';
 
 @Component({
   selector: 'ngx-charts-scale-legend',
@@ -36,6 +37,7 @@ export class ScaleLegendComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     const gradientValues = this.gradientString(this.colors.range(), this.colors.domain());
+    console.log('gradientValues', gradientValues);
     const direction = this.horizontal ? 'right' : 'bottom';
     this.gradient = this.sanitizer.bypassSecurityTrustStyle(`linear-gradient(to ${direction}, ${gradientValues})`);
   }
@@ -47,10 +49,11 @@ export class ScaleLegendComponent implements OnChanges {
    */
   gradientString(colors, splits): string {
     // add the 100%
-    splits.push(1);
+    // splits.push(1);
+    const points = range(0, 1 + 1 / (colors.length - 1), 1 / (colors.length - 1));
     const pairs = [];
     colors.reverse().forEach((c, i) => {
-      pairs.push(`${c} ${Math.round(splits[i] * 100)}%`);
+      pairs.push(`${c} ${Math.round(points[i] * 100)}%`);
     });
 
     return pairs.join(', ');
